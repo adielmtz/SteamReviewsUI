@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SteamGameReviews.Steam.Entities
 {
     internal sealed class AppInfo
@@ -7,5 +9,7 @@ namespace SteamGameReviews.Steam.Entities
         public required string Name { get; init; }
 
         public required string ImageUrl { get; init; }
+
+        public IList<Review> Reviews { get; set; } = new List<Review>();
     }
 }
