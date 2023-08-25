@@ -1,4 +1,4 @@
-using SteamGameReviews.Steam;
+using SteamGameReviews.Steam.Entities;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,11 +6,11 @@ namespace SteamGameReviews.Controls
 {
     internal partial class SearchResultItem : UserControl
     {
-        private SearchResult? item;
+        private AppInfo? item;
 
-        public SearchResult ResultItem
+        public AppInfo ResultItem
         {
-            get => item ?? new() { AppId = 0, AppName = "", ImageUrl = "", };
+            get => item ?? new() { Id = 0, Name = "", ImageUrl = "", };
             set => SetSearchResultItem(value);
         }
 
@@ -19,10 +19,11 @@ namespace SteamGameReviews.Controls
             InitializeComponent();
         }
 
-        private void SetSearchResultItem(SearchResult item)
+        private void SetSearchResultItem(AppInfo item)
         {
             this.item = item;
-            lbl_AppName.Text = item.AppName;
+            lbl_AppName.Text = item.Name;
+            lbl_AppId.Text = $"AppId: {item.Id}";
             pb_ThumbImage.Load(item.ImageUrl);
         }
 

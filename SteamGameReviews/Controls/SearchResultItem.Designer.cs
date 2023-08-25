@@ -30,6 +30,7 @@
         {
             pb_ThumbImage = new System.Windows.Forms.PictureBox();
             lbl_AppName = new System.Windows.Forms.Label();
+            lbl_AppId = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) pb_ThumbImage).BeginInit();
             SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             // 
             lbl_AppName.AutoSize = true;
             lbl_AppName.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            lbl_AppName.Location = new System.Drawing.Point(240, 31);
+            lbl_AppName.Location = new System.Drawing.Point(240, 3);
             lbl_AppName.Name = "lbl_AppName";
             lbl_AppName.Size = new System.Drawing.Size(131, 30);
             lbl_AppName.TabIndex = 1;
@@ -55,11 +56,21 @@
             lbl_AppName.MouseEnter += SearchResultItem_MouseEnter;
             lbl_AppName.MouseLeave += SearchResultItem_MouseLeave;
             // 
+            // lbl_AppId
+            // 
+            lbl_AppId.AutoSize = true;
+            lbl_AppId.Location = new System.Drawing.Point(240, 43);
+            lbl_AppId.Name = "lbl_AppId";
+            lbl_AppId.Size = new System.Drawing.Size(93, 15);
+            lbl_AppId.TabIndex = 2;
+            lbl_AppId.Text = "AppId: {{AppId}}";
+            // 
             // SearchResultItem
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.Control;
+            Controls.Add(lbl_AppId);
             Controls.Add(lbl_AppName);
             Controls.Add(pb_ThumbImage);
             Cursor = System.Windows.Forms.Cursors.Hand;
@@ -77,5 +88,6 @@
 
         private System.Windows.Forms.PictureBox pb_ThumbImage;
         private System.Windows.Forms.Label lbl_AppName;
+        private System.Windows.Forms.Label lbl_AppId;
     }
 }
