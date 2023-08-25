@@ -1,4 +1,5 @@
 using SteamGameReviews.Steam.Entities;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -10,9 +11,11 @@ namespace SteamGameReviews.Controls
 
         public AppInfo ResultItem
         {
-            get => item ?? new() { Id = 0, Name = "", ImageUrl = "", };
+            get => item ?? new() { Id = 0, Name = "", ImageUrl = ""};
             set => SetSearchResultItem(value);
         }
+
+        public Action<AppInfo>? ClickCallback { get; set; }
 
         public SearchResultItem()
         {
@@ -27,14 +30,19 @@ namespace SteamGameReviews.Controls
             pb_ThumbImage.Load(item.ImageUrl);
         }
 
-        private void SearchResultItem_MouseEnter(object sender, System.EventArgs e)
+        private void SearchResultItem_MouseEnter(object sender, EventArgs e)
         {
             BackColor = SystemColors.ActiveCaption;
         }
 
-        private void SearchResultItem_MouseLeave(object sender, System.EventArgs e)
+        private void SearchResultItem_MouseLeave(object sender, EventArgs e)
         {
             BackColor = SystemColors.Control;
+        }
+
+        private void SearchResultItem_Click(object sender, EventArgs e)
+        {
+            ClickCallback?.Invoke(item!);
         }
     }
 }

@@ -41,6 +41,7 @@
             pb_ThumbImage.Size = new System.Drawing.Size(231, 87);
             pb_ThumbImage.TabIndex = 0;
             pb_ThumbImage.TabStop = false;
+            pb_ThumbImage.Click += SearchResultItem_Click;
             pb_ThumbImage.MouseEnter += SearchResultItem_MouseEnter;
             pb_ThumbImage.MouseLeave += SearchResultItem_MouseLeave;
             // 
@@ -53,6 +54,7 @@
             lbl_AppName.Size = new System.Drawing.Size(131, 30);
             lbl_AppName.TabIndex = 1;
             lbl_AppName.Text = "{{AppName}}";
+            lbl_AppName.Click += SearchResultItem_Click;
             lbl_AppName.MouseEnter += SearchResultItem_MouseEnter;
             lbl_AppName.MouseLeave += SearchResultItem_MouseLeave;
             // 
@@ -64,6 +66,7 @@
             lbl_AppId.Size = new System.Drawing.Size(93, 15);
             lbl_AppId.TabIndex = 2;
             lbl_AppId.Text = "AppId: {{AppId}}";
+            lbl_AppId.Click += SearchResultItem_Click;
             // 
             // SearchResultItem
             // 
@@ -77,6 +80,7 @@
             MinimumSize = new System.Drawing.Size(760, 92);
             Name = "SearchResultItem";
             Size = new System.Drawing.Size(960, 92);
+            Click += SearchResultItem_Click;
             MouseEnter += SearchResultItem_MouseEnter;
             MouseLeave += SearchResultItem_MouseLeave;
             ((System.ComponentModel.ISupportInitialize) pb_ThumbImage).EndInit();
