@@ -6,5 +6,6 @@ namespace SteamGameReviews.Steam
 
         public static readonly int MinReviews = 20;
         public static readonly int MaxReviews = 5000;
+        public static readonly int MaxReviewsPerRequest = 100;
     }
 }

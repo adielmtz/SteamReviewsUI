@@ -16,11 +16,6 @@ namespace SteamGameReviews.Steam
             string cursor = "*";
             var reviews = new List<Review>(payload.NumReviews);
 
-            if (app.Reviews != null && app.Reviews.Count >= payload.NumReviews)
-            {
-                return;
-            }
-
             Debug.WriteLine("Fetching reviews [{0}] \"{1}\"", app.Id, app.Name);
 
             while (reviews.Count < payload.NumReviews)
@@ -52,7 +47,7 @@ namespace SteamGameReviews.Steam
                 { "cursor", cursor },
                 { "review_type", payload.ReviewType },
                 { "purchase_type", "all" },
-                { "num_per_page", "100" },
+                { "num_per_page", SteamConstants.MaxReviewsPerRequest.ToString() },
             };
 
             if (!payload.FilterOfftopic)
