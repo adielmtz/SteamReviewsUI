@@ -8,6 +8,10 @@
     <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
   <ItemGroup>
     <EditorConfigFiles Remove="C:\Users\Adiel\Repositories\adielmtz\SteamGameReviews\SteamGameReviews\.editorconfig" />
   </ItemGroup>
