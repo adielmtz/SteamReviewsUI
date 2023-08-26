@@ -21,6 +21,7 @@ namespace SteamGameReviews.Steam
             InitializeSerializer();
             stream = new FileStream(filename, FileMode.Create, FileAccess.Write);
             writer = new StreamWriter(stream, new UTF8Encoding(false));
+            writer.NewLine = "\n";
         }
 
         public void Dispose()
