@@ -52,7 +52,7 @@ namespace SteamGameReviews
                 dgv_AppListView.Rows[row].Cells["AppId"].Value = app.Id;
                 dgv_AppListView.Rows[row].Cells["AppName"].Value = app.Name;
                 dgv_AppListView.Rows[row].Cells["NumReviews"].Value = SteamConstants.MinReviews;
-                dgv_AppListView.Rows[row].Cells["Language"].Value = "Inglés";
+                dgv_AppListView.Rows[row].Cells["Language"].Value = "Español";
                 dgv_AppListView.Rows[row].Cells["ReviewType"].Value = "Todas";
                 dgv_AppListView.Rows[row].Cells["FilterOfftopic"].Value = false;
                 SelectedApps.Add(app.Id, app);
