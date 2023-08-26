@@ -10,6 +10,6 @@ namespace SteamGameReviews.Steam.Entities
 
         public required string ImageUrl { get; init; }
 
-        public IList<Review> Reviews { get; set; } = new List<Review>();
+        public IList<Review>? Reviews { get; set; }
     }
 }
