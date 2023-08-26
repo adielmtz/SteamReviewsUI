@@ -142,7 +142,7 @@ namespace SteamGameReviews
             {
                 var payload = new RequestPayload();
                 payload.AppInfo = (AppInfo) row.Tag!;
-                payload.NumReviews = (int) row.Cells["NumReviews"].Value;
+                payload.NumReviews = Convert.ToInt32(row.Cells["NumReviews"].Value);
                 payload.Language = GetLanguage(row.Cells["Language"].Value.ToString()!);
                 payload.ReviewType = GetReviewType(row.Cells["ReviewType"].Value.ToString()!);
                 payload.FilterOfftopic = Convert.ToBoolean(row.Cells["FilterOfftopic"].Value);
