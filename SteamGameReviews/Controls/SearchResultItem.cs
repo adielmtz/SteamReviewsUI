@@ -7,27 +7,42 @@ namespace SteamGameReviews.Controls
 {
     internal partial class SearchResultItem : UserControl
     {
-        private AppInfo? item;
+        private AppInfo? app;
+        private bool _selected = false;
 
-        public AppInfo ResultItem
+        public AppInfo AppInfo
         {
-            get => item ?? new() { Id = 0, Name = "", ImageUrl = ""};
+            get => app ?? new AppInfo { Id = 0, Name = string.Empty, ImageUrl = string.Empty };
             set => SetSearchResultItem(value);
         }
 
-        public Action<AppInfo>? ClickCallback { get; set; }
+        public bool Selected
+        {
+            get
+            {
+                return _selected;
+            }
+            set
+            {
+                _selected = value;
+                BackColor = _selected ? SystemColors.ActiveCaption : SystemColors.Control;
+                SelectionChangedCallback?.Invoke(this);
+            }
+        }
+
+        public Action<SearchResultItem>? SelectionChangedCallback { get; set; }
 
         public SearchResultItem()
         {
             InitializeComponent();
         }
 
-        private void SetSearchResultItem(AppInfo item)
+        private void SetSearchResultItem(AppInfo app)
         {
-            this.item = item;
-            lbl_AppName.Text = item.Name;
-            lbl_AppId.Text = $"AppId: {item.Id}";
-            pb_ThumbImage.Load(item.ImageUrl);
+            this.app = app;
+            lbl_AppName.Text = app.Name;
+            lbl_AppId.Text = $"AppId: {app.Id}";
+            pb_ThumbImage.Load(app.ImageUrl);
         }
 
         private void SearchResultItem_MouseEnter(object sender, EventArgs e)
@@ -37,12 +52,15 @@ namespace SteamGameReviews.Controls
 
         private void SearchResultItem_MouseLeave(object sender, EventArgs e)
         {
-            BackColor = SystemColors.Control;
+            if (!Selected)
+            {
+                BackColor = SystemColors.Control;
+            }
         }
 
         private void SearchResultItem_Click(object sender, EventArgs e)
         {
-            ClickCallback?.Invoke(item!);
+            Selected = !Selected;
         }
     }
 }

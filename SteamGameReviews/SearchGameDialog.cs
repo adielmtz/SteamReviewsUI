@@ -10,16 +10,17 @@ namespace SteamGameReviews
 {
     public partial class SearchGameDialog : Form
     {
-        internal IDictionary<long, AppInfo>? apps;
+        private IDictionary<long, AppInfo> selectedApps = new Dictionary<long, AppInfo>();
+        private Action<IDictionary<long, AppInfo>>? callback;
 
         public SearchGameDialog()
         {
             InitializeComponent();
         }
 
-        internal void SetAppDictionary(IDictionary<long, AppInfo> apps)
+        internal SearchGameDialog(Action<IDictionary<long, AppInfo>> callback) : this()
         {
-            this.apps = apps;
+            this.callback = callback;
         }
 
         private async void DoSearch_Click(object sender, EventArgs e)
@@ -31,6 +32,7 @@ namespace SteamGameReviews
         {
             if (e.KeyCode == Keys.Enter)
             {
+                e.Handled = true;
                 await ExecuteSearchAsync();
             }
         }
@@ -43,21 +45,35 @@ namespace SteamGameReviews
             foreach (AppInfo result in results)
             {
                 var control = new SearchResultItem();
-                control.ResultItem = result;
+                control.AppInfo = result;
                 control.AutoSize = true;
                 control.Dock = DockStyle.Fill;
-                control.ClickCallback = ClickCallback;
+                control.SelectionChangedCallback = OnSelectionChange;
+
+                if (selectedApps.ContainsKey(result.Id))
+                {
+                    control.Selected = true;
+                }
+
                 ResultContainer.Controls.Add(control);
             }
         }
 
-        private void ClickCallback(AppInfo app)
+        private void OnSelectionChange(SearchResultItem item)
         {
-            if (apps != null)
+            if (item.Selected)
             {
-                apps[app.Id] = app;
+                selectedApps[item.AppInfo.Id] = item.AppInfo;
             }
+            else
+            {
+                selectedApps.Remove(item.AppInfo.Id);
+            }
+        }
 
+        private void AddAndClose_Click(object sender, EventArgs e)
+        {
+            callback?.Invoke(selectedApps);
             Close();
         }
     }

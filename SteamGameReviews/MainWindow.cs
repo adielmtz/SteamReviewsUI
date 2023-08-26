@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SteamGameReviews
 {
@@ -32,19 +33,20 @@ namespace SteamGameReviews
             }
         }
 
-        private void AddGame_Click(object sender, EventArgs e)
+        private void SelectedGamesCallback(IDictionary<long, AppInfo> selectedApps)
         {
-            var dialog = new SearchGameDialog();
-            dialog.ShowDialog();
-
-            // Wait for dialog to close
-
             // Redo grid view
-            foreach (KeyValuePair<long, AppInfo> kvp in SelectedApps)
+            foreach (KeyValuePair<long, AppInfo> kvp in selectedApps)
             {
                 AppInfo app = kvp.Value;
-                int row = dgv_AppListView.Rows.Add();
 
+                if (SelectedApps.ContainsKey(kvp.Key))
+                {
+                    // Skip duplicates
+                    continue;
+                }
+
+                int row = dgv_AppListView.Rows.Add();
                 dgv_AppListView.Rows[row].Tag = app;
                 dgv_AppListView.Rows[row].Cells["AppId"].Value = app.Id;
                 dgv_AppListView.Rows[row].Cells["AppName"].Value = app.Name;
@@ -52,7 +54,14 @@ namespace SteamGameReviews
                 dgv_AppListView.Rows[row].Cells["Language"].Value = "Inglés";
                 dgv_AppListView.Rows[row].Cells["ReviewType"].Value = "Todas";
                 dgv_AppListView.Rows[row].Cells["FilterOfftopic"].Value = false;
+                SelectedApps.Add(app.Id, app);
             }
+        }
+
+        private void AddGame_Click(object sender, EventArgs e)
+        {
+            var dialog = new SearchGameDialog(SelectedGamesCallback);
+            dialog.ShowDialog();
         }
 
         private void AppListView_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
@@ -139,6 +148,7 @@ namespace SteamGameReviews
             }
 
             string filename = await WriteReviewsToCsvAsync();
+            pb_DownloadProgress.Value = pb_DownloadProgress.Maximum;
 
             MessageBox.Show(
                 "Se ha completado la descarga correctamente." +

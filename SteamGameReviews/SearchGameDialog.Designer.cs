@@ -33,6 +33,7 @@
             ResultContainer = new System.Windows.Forms.FlowLayoutPanel();
             label1 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            button1 = new System.Windows.Forms.Button();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -85,11 +86,23 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Resultados";
             // 
+            // button1
+            // 
+            button1.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            button1.Location = new System.Drawing.Point(992, 9);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(260, 41);
+            button1.TabIndex = 6;
+            button1.Text = "Añadir seleccionados y salir";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += AddAndClose_Click;
+            // 
             // SearchGameDialog
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(button1);
             Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(btn_DoSearch);
@@ -108,5 +121,6 @@
         private System.Windows.Forms.FlowLayoutPanel ResultContainer;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
