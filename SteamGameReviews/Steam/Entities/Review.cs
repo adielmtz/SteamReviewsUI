@@ -21,11 +21,11 @@ namespace SteamGameReviews.Steam.Entities
 
         [JsonPropertyName("timestamp_created")]
         [JsonConverter(typeof(NumberToDateTimeConverter))]
-        public required DateTime CreatedTime { get; init; }
+        public required DateTime DateWritten { get; init; }
 
         [JsonPropertyName("timestamp_updated")]
         [JsonConverter(typeof(NumberToDateTimeConverter))]
-        public required DateTime UpdatedTime { get; init; }
+        public required DateTime DateUpdated { get; init; }
 
         [JsonPropertyName("voted_up")]
         public required bool VotedUp { get; init; }

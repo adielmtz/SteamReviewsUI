@@ -1,3 +1,4 @@
+using SteamGameReviews.Extensions;
 using SteamGameReviews.Steam.Entities;
 using System;
 using System.Collections.Generic;
@@ -138,23 +139,33 @@ namespace SteamGameReviews.Steam
         {
             var dto = new CsvDto();
 
-            dto.review_id = review.Id;
-            dto.app_id = app.Id;
+            /* AppInfo */
+            dto.app_id   = app.Id;
             dto.app_name = app.Name;
-            dto.author_id = review.Author.Id;
-            dto.author_owned_games = review.Author.GamesOwned;
-            dto.author_playtime_hours = review.Author.PlaytimeAtReview.TotalHours.ToString();
-            dto.author_last_played = review.Author.LastPlayed.ToString("yyyy-MM-dd HH:mm:ss");
-            dto.review_lang = review.Language;
-            dto.review_text = review.Text;
-            dto.review_date = review.CreatedTime.ToString("yyyy-MM-dd HH:mm:ss");
-            dto.review_voted_up = review.VotedUp;
-            dto.review_votes_up = review.VotesUp;
-            dto.review_votes_funny = review.VotesFunny;
-            dto.review_purchased_on_steam = review.PurchasedOnSteam;
-            dto.review_received_for_free = review.ReceivedForFree;
-            dto.review_written_earlyaccess = review.WrittenDuringEarlyAccess;
-            dto.review_hidden_in_china = review.HiddenInChina;
+
+            /* Author */
+            dto.author_id                      = review.Author.Id;
+            dto.author_games_owned             = review.Author.GamesOwned;
+            dto.author_written_reviews         = review.Author.WrittenReviews;
+            dto.author_playtime_forever        = review.Author.PlaytimeForever.TotalSeconds;
+            dto.author_playtime_last_two_weeks = review.Author.PlaytimeLastTwoWeeks.TotalSeconds;
+            dto.author_playtime_at_review      = review.Author.PlaytimeAtReview.TotalSeconds;
+            dto.author_last_played             = review.Author.LastPlayed.ToISO8601String();
+
+            /* Review */
+            dto.review_id                          = review.Id;
+            dto.review_language                    = review.Language;
+            dto.review_text                        = review.Text;
+            dto.review_date_written                = review.DateWritten.ToISO8601String();
+            dto.review_date_updated                = review.DateUpdated.ToISO8601String();
+            dto.review_voted_up                    = review.VotedUp;
+            dto.review_votes_up                    = review.VotesUp;
+            dto.review_votes_funny                 = review.VotesFunny;
+            dto.review_weighted_vote_score         = review.WeightedVoteScore;
+            dto.review_purchased_on_steam          = review.PurchasedOnSteam;
+            dto.review_received_for_free           = review.ReceivedForFree;
+            dto.review_written_during_early_access = review.WrittenDuringEarlyAccess;
+            dto.review_hidden_in_china             = review.HiddenInChina;
 
             return dto;
         }
@@ -178,22 +189,32 @@ namespace SteamGameReviews.Steam
 
         private class CsvDto
         {
-            public long review_id;
+            /* AppInfo */
             public long app_id;
             public string app_name = "";
+
+            /* Author */
             public long author_id;
-            public int author_owned_games;
-            public string author_playtime_hours = "";
+            public int author_games_owned;
+            public int author_written_reviews;
+            public double author_playtime_forever;
+            public double author_playtime_last_two_weeks;
+            public double author_playtime_at_review;
             public string author_last_played = "";
-            public string review_lang = "";
+
+            /* Review */
+            public long review_id;
+            public string review_language = "";
             public string review_text = "";
-            public string review_date = "";
+            public string review_date_written = "";
+            public string review_date_updated = "";
             public bool review_voted_up;
             public int review_votes_up;
             public int review_votes_funny;
+            public double review_weighted_vote_score;
             public bool review_purchased_on_steam;
             public bool review_received_for_free;
-            public bool review_written_earlyaccess;
+            public bool review_written_during_early_access;
             public bool review_hidden_in_china;
         }
     }
