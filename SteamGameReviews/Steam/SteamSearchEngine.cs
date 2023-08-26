@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using SteamGameReviews.Steam.Entities;
 
 namespace SteamGameReviews.Steam
 {
@@ -16,7 +17,7 @@ namespace SteamGameReviews.Steam
         private static readonly Regex AppNameRegex = new Regex(@"<div\s+class=""match_name\s*""\>(.[^<]+)</div>");
         private static readonly Regex ImageUrlRegex = new Regex(@"<img\s+src=""(.[^""]+)"">");
 
-        public static async Task<IList<SearchResult>> SearchAsync(string term)
+        public static async Task<IList<AppInfo>> SearchAsync(string term)
         {
             var parameters = new Dictionary<string, string>
             {
@@ -41,10 +42,10 @@ namespace SteamGameReviews.Steam
             return ParseResponseHtml(response);
         }
 
-        private static IList<SearchResult> ParseResponseHtml(string response)
+        private static IList<AppInfo> ParseResponseHtml(string response)
         {
             string[] segments = response.Split("</a>", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-            var apps = new List<SearchResult>(segments.Length);
+            var apps = new List<AppInfo>(segments.Length);
 
             for (int i = 0; i < segments.Length; i++)
             {
@@ -56,10 +57,10 @@ namespace SteamGameReviews.Steam
 
                 if (appIdMatch.Success && appNameMatch.Success && imageUrlMatch.Success)
                 {
-                    var result = new SearchResult
+                    var result = new AppInfo
                     {
-                        AppId = long.Parse(appIdMatch.Groups[1].Value.Trim()),
-                        AppName = appNameMatch.Groups[1].Value.Trim(),
+                        Id = long.Parse(appIdMatch.Groups[1].Value.Trim()),
+                        Name = appNameMatch.Groups[1].Value.Trim(),
                         ImageUrl = imageUrlMatch.Groups[1].Value.Trim(),
                     };
 
