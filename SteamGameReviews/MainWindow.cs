@@ -136,7 +136,7 @@ namespace SteamGameReviews
             pb_DownloadProgress.Visible = true;
             Enabled = false;
 
-            bool success = false;
+            bool success = true;
 
             foreach (DataGridViewRow row in dgv_AppListView.Rows)
             {
@@ -172,9 +172,9 @@ namespace SteamGameReviews
                 pb_DownloadProgress.Value = pb_DownloadProgress.Maximum;
 
                 MessageBox.Show(
-                    "Se ha completado la descarga correctamente." +
+                    "Se ha completado la descarga correctamente. " +
                     $"Archivo guardado en: {filename}",
-                    "Información",
+                    "Descarga finalizada",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
