@@ -10,7 +10,6 @@ namespace SteamGameReviews.Steam
 {
     internal sealed class SteamReviewCsvWritter : IAsyncDisposable, IDisposable
     {
-        private static readonly byte[] EndOfLineBytes = Encoding.UTF8.GetBytes("\n");
         private static Dictionary<string, FieldInfo>? serializedFields;
 
         private Stream stream;
@@ -20,7 +19,7 @@ namespace SteamGameReviews.Steam
         {
             InitializeSerializer();
             stream = new FileStream(filename, FileMode.Create, FileAccess.Write);
-            writer = new StreamWriter(stream, Encoding.UTF8);
+            writer = new StreamWriter(stream, new UTF8Encoding(false));
         }
 
         public void Dispose()
