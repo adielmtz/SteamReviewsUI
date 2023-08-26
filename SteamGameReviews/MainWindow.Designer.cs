@@ -87,9 +87,12 @@ namespace SteamGameReviews
             // dgv_AppListView
             // 
             dgv_AppListView.AllowUserToAddRows = false;
+            dgv_AppListView.AllowUserToResizeRows = false;
             dgv_AppListView.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            dgv_AppListView.CausesValidation = false;
             dgv_AppListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_AppListView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] { AppId, AppName, NumReviews, Language, ReviewType, FilterOfftopic });
+            dgv_AppListView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             dgv_AppListView.Location = new System.Drawing.Point(12, 56);
             dgv_AppListView.Name = "dgv_AppListView";
             dgv_AppListView.RowTemplate.Height = 25;
@@ -123,6 +126,7 @@ namespace SteamGameReviews
             // Language
             // 
             Language.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            Language.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             Language.HeaderText = "Idioma";
             Language.Items.AddRange(new object[] { "Inglés", "Español" });
             Language.Name = "Language";
@@ -130,6 +134,7 @@ namespace SteamGameReviews
             // ReviewType
             // 
             ReviewType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            ReviewType.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             ReviewType.HeaderText = "Tipo de reseña";
             ReviewType.Items.AddRange(new object[] { "Todas", "Solo positivas", "Solo negativas" });
             ReviewType.Name = "ReviewType";
@@ -203,13 +208,13 @@ namespace SteamGameReviews
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.DataGridView dgv_AppListView;
         private System.Windows.Forms.Button btn_AddGame;
+        private System.Windows.Forms.ProgressBar pb_DownloadProgress;
+        private System.Windows.Forms.CheckBox chk_OpenFolder;
         private System.Windows.Forms.DataGridViewTextBoxColumn AppId;
         private System.Windows.Forms.DataGridViewTextBoxColumn AppName;
         private System.Windows.Forms.DataGridViewTextBoxColumn NumReviews;
         private System.Windows.Forms.DataGridViewComboBoxColumn Language;
         private System.Windows.Forms.DataGridViewComboBoxColumn ReviewType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn FilterOfftopic;
-        private System.Windows.Forms.ProgressBar pb_DownloadProgress;
-        private System.Windows.Forms.CheckBox chk_OpenFolder;
     }
 }
