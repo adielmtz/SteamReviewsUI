@@ -37,6 +37,7 @@ namespace SteamGameReviews.Steam.Entities
         public required int VotesFunny { get; init; }
 
         [JsonPropertyName("weighted_vote_score")]
+        [JsonConverter(typeof(StringToDoubleConverter))]
         public required double WeightedVoteScore { get; init; }
 
         [JsonPropertyName("comment_count")]
