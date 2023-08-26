@@ -7,6 +7,7 @@ namespace SteamGameReviews.Steam.Entities
     internal sealed class Author
     {
         [JsonPropertyName("steamid")]
+        [JsonConverter(typeof(StringToLongConverter))]
         public required long Id { get; init; }
 
         [JsonPropertyName("num_games_owned")]
