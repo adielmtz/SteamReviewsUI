@@ -181,14 +181,14 @@ namespace SteamGameReviews.Steam
         {
             public long review_id;
             public long app_id;
-            public string app_name;
+            public string app_name = "";
             public long author_id;
             public int author_owned_games;
-            public string author_playtime_hours;
-            public string author_last_played;
-            public string review_lang;
-            public string review_text;
-            public string review_date;
+            public string author_playtime_hours = "";
+            public string author_last_played = "";
+            public string review_lang = "";
+            public string review_text = "";
+            public string review_date = "";
             public bool review_voted_up;
             public int review_votes_up;
             public int review_votes_funny;
