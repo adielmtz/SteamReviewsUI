@@ -3,6 +3,7 @@ using SteamGameReviews.Steam;
 using SteamGameReviews.Steam.Entities;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -39,23 +40,35 @@ namespace SteamGameReviews
 
         private async Task ExecuteSearchAsync()
         {
-            IList<AppInfo> results = await SteamSearchEngine.SearchAsync(tb_SearchTerms.Text);
-            ResultContainer.Controls.Clear();
-
-            foreach (AppInfo result in results)
+            try
             {
-                var control = new SearchResultItem();
-                control.AppInfo = result;
-                control.AutoSize = true;
-                control.Dock = DockStyle.Fill;
-                control.SelectionChangedCallback = OnSelectionChange;
+                IList<AppInfo> results = await SteamSearchEngine.SearchAsync(tb_SearchTerms.Text);
+                ResultContainer.Controls.Clear();
 
-                if (selectedApps.ContainsKey(result.Id))
+                foreach (AppInfo result in results)
                 {
-                    control.Selected = true;
-                }
+                    var control = new SearchResultItem();
+                    control.AppInfo = result;
+                    control.AutoSize = true;
+                    control.Dock = DockStyle.Fill;
+                    control.SelectionChangedCallback = OnSelectionChange;
 
-                ResultContainer.Controls.Add(control);
+                    if (selectedApps.ContainsKey(result.Id))
+                    {
+                        control.Selected = true;
+                    }
+
+                    ResultContainer.Controls.Add(control);
+                }
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show(
+                    "Ocurrió un error de red. Verifica tu conexión a Internet.",
+                    "Error.",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 

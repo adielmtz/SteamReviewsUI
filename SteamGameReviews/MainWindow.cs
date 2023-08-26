@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -135,6 +136,8 @@ namespace SteamGameReviews
             pb_DownloadProgress.Visible = true;
             Enabled = false;
 
+            bool success = false;
+
             foreach (DataGridViewRow row in dgv_AppListView.Rows)
             {
                 var payload = new RequestPayload();
@@ -143,24 +146,43 @@ namespace SteamGameReviews
                 payload.Language = GetLanguage(row.Cells["Language"].Value.ToString()!);
                 payload.ReviewType = GetReviewType(row.Cells["ReviewType"].Value.ToString()!);
                 payload.FilterOfftopic = Convert.ToBoolean(row.Cells["FilterOfftopic"].Value);
-                await ReviewFetcher.FetchReviewsAsync(payload);
-                pb_DownloadProgress.PerformStep();
+
+                try
+                {
+                    await ReviewFetcher.FetchReviewsAsync(payload);
+                    pb_DownloadProgress.PerformStep();
+                }
+                catch (HttpRequestException)
+                {
+                    MessageBox.Show(
+                        "Ocurrió un error de red. Verifica tu conexión a Internet.",
+                        "Error.",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+
+                    success = false;
+                    break;
+                }
             }
 
-            string filename = await WriteReviewsToCsvAsync();
-            pb_DownloadProgress.Value = pb_DownloadProgress.Maximum;
-
-            MessageBox.Show(
-                "Se ha completado la descarga correctamente." +
-                $"Archivo guardado en: {filename}",
-                "Información",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
-
-            if (chk_OpenFolder.Checked)
+            if (success)
             {
-                Process.Start("explorer.exe", tb_outputDirectory.Text);
+                string filename = await WriteReviewsToCsvAsync();
+                pb_DownloadProgress.Value = pb_DownloadProgress.Maximum;
+
+                MessageBox.Show(
+                    "Se ha completado la descarga correctamente." +
+                    $"Archivo guardado en: {filename}",
+                    "Información",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                if (chk_OpenFolder.Checked)
+                {
+                    Process.Start("explorer.exe", tb_outputDirectory.Text);
+                }
             }
 
             Enabled = true;
