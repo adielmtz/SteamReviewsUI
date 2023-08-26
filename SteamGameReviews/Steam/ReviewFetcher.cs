@@ -12,9 +12,14 @@ namespace SteamGameReviews.Steam
     {
         public static async Task FetchReviewsAsync(RequestPayload payload)
         {
-            var reviews = new List<Review>(payload.NumReviews);
-            string cursor = "*";
             AppInfo app = payload.AppInfo;
+            string cursor = "*";
+            var reviews = new List<Review>(payload.NumReviews);
+
+            if (app.Reviews != null && app.Reviews.Count >= payload.NumReviews)
+            {
+                return;
+            }
 
             Debug.WriteLine("Fetching reviews [{0}] \"{1}\"", app.Id, app.Name);
 
