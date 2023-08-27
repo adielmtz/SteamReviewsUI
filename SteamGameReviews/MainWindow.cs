@@ -126,6 +126,9 @@ namespace SteamGameReviews
 
         private async void Start_Click(object sender, EventArgs e)
         {
+            // Ensure Data is saved
+            dgv_AppListView.EndEdit();
+
             if (!IsUserInputValid())
             {
                 return;

@@ -150,7 +150,7 @@ namespace SteamGameReviews
             // btn_AddGame
             // 
             btn_AddGame.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btn_AddGame.Location = new System.Drawing.Point(837, 5);
+            btn_AddGame.Location = new System.Drawing.Point(863, 5);
             btn_AddGame.Name = "btn_AddGame";
             btn_AddGame.Size = new System.Drawing.Size(122, 45);
             btn_AddGame.TabIndex = 2;
