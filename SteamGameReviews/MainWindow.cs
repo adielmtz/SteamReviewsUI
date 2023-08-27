@@ -18,6 +18,7 @@ namespace SteamGameReviews
         {
             InitializeComponent();
             tb_outputDirectory.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            lbl_ProgressReport.Text = "";
         }
 
         private void SelectOputDirectory_Click(object sender, EventArgs e)

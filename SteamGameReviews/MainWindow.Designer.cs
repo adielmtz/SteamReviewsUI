@@ -181,12 +181,13 @@ namespace SteamGameReviews
             // 
             // lbl_ProgressReport
             // 
-            lbl_ProgressReport.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lbl_ProgressReport.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lbl_ProgressReport.AutoSize = true;
             lbl_ProgressReport.Location = new System.Drawing.Point(218, 650);
             lbl_ProgressReport.Name = "lbl_ProgressReport";
-            lbl_ProgressReport.Size = new System.Drawing.Size(0, 15);
+            lbl_ProgressReport.Size = new System.Drawing.Size(194, 15);
             lbl_ProgressReport.TabIndex = 5;
+            lbl_ProgressReport.Text = "{{DOWNLOAD PROGRESS REPORT}}";
             // 
             // MainWindow
             // 
