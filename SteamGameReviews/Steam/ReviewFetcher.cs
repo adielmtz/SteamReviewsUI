@@ -10,7 +10,7 @@ namespace SteamGameReviews.Steam
 {
     internal static class ReviewFetcher
     {
-        public static async Task FetchReviewsAsync(RequestPayload payload)
+        public static async Task FetchReviewsAsync(RequestPayload payload, Action<AppInfo, int, int> onProgressCallback)
         {
             AppInfo app = payload.AppInfo;
             string cursor = "*";
@@ -28,9 +28,12 @@ namespace SteamGameReviews.Steam
                         break;
                     }
 
+
                     reviews.AddRange(response.Reviews);
                     cursor = response.Cursor;
                     Debug.WriteLine("Got {0} reviews. Total: {1}", response.Reviews.Count, reviews.Count);
+
+                    onProgressCallback.Invoke(app, reviews.Count, payload.NumReviews);
                 }
             }
 

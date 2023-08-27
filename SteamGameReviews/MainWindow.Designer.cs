@@ -42,6 +42,7 @@ namespace SteamGameReviews
             btn_AddGame = new System.Windows.Forms.Button();
             pb_DownloadProgress = new System.Windows.Forms.ProgressBar();
             chk_OpenFolder = new System.Windows.Forms.CheckBox();
+            lbl_ProgressReport = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize) dgv_AppListView).BeginInit();
             SuspendLayout();
             // 
@@ -96,7 +97,7 @@ namespace SteamGameReviews
             dgv_AppListView.Location = new System.Drawing.Point(12, 56);
             dgv_AppListView.Name = "dgv_AppListView";
             dgv_AppListView.RowTemplate.Height = 25;
-            dgv_AppListView.Size = new System.Drawing.Size(1240, 613);
+            dgv_AppListView.Size = new System.Drawing.Size(1240, 584);
             dgv_AppListView.TabIndex = 2;
             dgv_AppListView.TabStop = false;
             dgv_AppListView.UserDeletingRow += AppListView_UserDeletingRow;
@@ -159,14 +160,12 @@ namespace SteamGameReviews
             // 
             // pb_DownloadProgress
             // 
-            pb_DownloadProgress.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            pb_DownloadProgress.Location = new System.Drawing.Point(638, 27);
+            pb_DownloadProgress.Anchor =  System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+            pb_DownloadProgress.Location = new System.Drawing.Point(12, 646);
             pb_DownloadProgress.Name = "pb_DownloadProgress";
-            pb_DownloadProgress.Size = new System.Drawing.Size(193, 23);
+            pb_DownloadProgress.Size = new System.Drawing.Size(200, 23);
             pb_DownloadProgress.Step = 1;
-            pb_DownloadProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             pb_DownloadProgress.TabIndex = 3;
-            pb_DownloadProgress.Visible = false;
             // 
             // chk_OpenFolder
             // 
@@ -180,11 +179,21 @@ namespace SteamGameReviews
             chk_OpenFolder.Text = "Abrir carpeta al finalizar la descarga";
             chk_OpenFolder.UseVisualStyleBackColor = true;
             // 
+            // lbl_ProgressReport
+            // 
+            lbl_ProgressReport.Anchor =  System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            lbl_ProgressReport.AutoSize = true;
+            lbl_ProgressReport.Location = new System.Drawing.Point(218, 650);
+            lbl_ProgressReport.Name = "lbl_ProgressReport";
+            lbl_ProgressReport.Size = new System.Drawing.Size(0, 15);
+            lbl_ProgressReport.TabIndex = 5;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(lbl_ProgressReport);
             Controls.Add(chk_OpenFolder);
             Controls.Add(pb_DownloadProgress);
             Controls.Add(btn_AddGame);
@@ -216,5 +225,6 @@ namespace SteamGameReviews
         private System.Windows.Forms.DataGridViewComboBoxColumn Language;
         private System.Windows.Forms.DataGridViewComboBoxColumn ReviewType;
         private System.Windows.Forms.DataGridViewCheckBoxColumn FilterOfftopic;
+        private System.Windows.Forms.Label lbl_ProgressReport;
     }
 }

@@ -7,7 +7,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SteamGameReviews
 {
@@ -131,9 +130,7 @@ namespace SteamGameReviews
                 return;
             }
 
-            pb_DownloadProgress.Maximum = SelectedApps.Count;
-            pb_DownloadProgress.Value = 0;
-            pb_DownloadProgress.Visible = true;
+            lbl_ProgressReport.Text = "";
             Enabled = false;
 
             bool success = true;
@@ -147,10 +144,15 @@ namespace SteamGameReviews
                 payload.ReviewType = GetReviewType(row.Cells["ReviewType"].Value.ToString()!);
                 payload.FilterOfftopic = Convert.ToBoolean(row.Cells["FilterOfftopic"].Value);
 
+                // Call it at least once
+                OnDownloadProgressBarCallback(payload.AppInfo, 0, payload.NumReviews);
+
+                pb_DownloadProgress.Maximum = payload.NumReviews;
+                pb_DownloadProgress.Value = 0;
+
                 try
                 {
-                    await ReviewFetcher.FetchReviewsAsync(payload);
-                    pb_DownloadProgress.PerformStep();
+                    await ReviewFetcher.FetchReviewsAsync(payload, OnDownloadProgressBarCallback);
                 }
                 catch (HttpRequestException)
                 {
@@ -186,7 +188,14 @@ namespace SteamGameReviews
             }
 
             Enabled = true;
-            pb_DownloadProgress.Visible = false;
+            lbl_ProgressReport.Text = "";
+            pb_DownloadProgress.Value = 0;
+        }
+
+        private void OnDownloadProgressBarCallback(AppInfo app, int current, int total)
+        {
+            lbl_ProgressReport.Text = $"{app.Name} ({current} / {total})";
+            pb_DownloadProgress.Value = current;
         }
 
         private async Task<string> WriteReviewsToCsvAsync()
