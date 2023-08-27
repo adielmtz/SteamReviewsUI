@@ -17,6 +17,7 @@ namespace SteamGameReviews
         public SearchGameDialog()
         {
             InitializeComponent();
+            lbl_SelectedGameCount.Text = "";
         }
 
         internal SearchGameDialog(Action<IDictionary<long, AppInfo>> callback) : this()
@@ -82,6 +83,8 @@ namespace SteamGameReviews
             {
                 selectedApps.Remove(item.AppInfo.Id);
             }
+
+            lbl_SelectedGameCount.Text = $"{selectedApps.Count} seleccionados.";
         }
 
         private void AddAndClose_Click(object sender, EventArgs e)

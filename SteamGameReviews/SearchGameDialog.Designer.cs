@@ -34,6 +34,7 @@
             label1 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
             button1 = new System.Windows.Forms.Button();
+            lbl_SelectedGameCount = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -93,15 +94,25 @@
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(260, 41);
             button1.TabIndex = 6;
-            button1.Text = "Añadir seleccionados y salir";
+            button1.Text = "Agregar seleccionados";
             button1.UseVisualStyleBackColor = true;
             button1.Click += AddAndClose_Click;
+            // 
+            // lbl_SelectedGameCount
+            // 
+            lbl_SelectedGameCount.AutoSize = true;
+            lbl_SelectedGameCount.Location = new System.Drawing.Point(486, 31);
+            lbl_SelectedGameCount.Name = "lbl_SelectedGameCount";
+            lbl_SelectedGameCount.Size = new System.Drawing.Size(90, 15);
+            lbl_SelectedGameCount.TabIndex = 7;
+            lbl_SelectedGameCount.Text = "{{APP_COUNT}}";
             // 
             // SearchGameDialog
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1264, 681);
+            Controls.Add(lbl_SelectedGameCount);
             Controls.Add(button1);
             Controls.Add(groupBox1);
             Controls.Add(label1);
@@ -122,5 +133,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lbl_SelectedGameCount;
     }
 }
