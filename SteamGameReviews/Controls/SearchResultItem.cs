@@ -26,11 +26,8 @@ namespace SteamGameReviews.Controls
             {
                 _selected = value;
                 BackColor = _selected ? SystemColors.ActiveCaption : SystemColors.Control;
-                SelectionChangedCallback?.Invoke(this);
             }
         }
-
-        public Action<SearchResultItem>? SelectionChangedCallback { get; set; }
 
         public SearchResultItem()
         {

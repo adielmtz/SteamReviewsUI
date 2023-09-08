@@ -17,7 +17,6 @@ namespace SteamGameReviews
         public SearchGameDialog()
         {
             InitializeComponent();
-            lbl_SelectedGameCount.Text = "";
         }
 
         internal SearchGameDialog(Action<IDictionary<long, AppInfo>> callback) : this()
@@ -52,13 +51,6 @@ namespace SteamGameReviews
                     control.AppInfo = result;
                     control.AutoSize = true;
                     control.Dock = DockStyle.Fill;
-                    control.SelectionChangedCallback = OnSelectionChange;
-
-                    if (selectedApps.ContainsKey(result.Id))
-                    {
-                        control.Selected = true;
-                    }
-
                     ResultContainer.Controls.Add(control);
                 }
             }
@@ -73,24 +65,50 @@ namespace SteamGameReviews
             }
         }
 
-        private void OnSelectionChange(SearchResultItem item)
-        {
-            if (item.Selected)
-            {
-                selectedApps[item.AppInfo.Id] = item.AppInfo;
-            }
-            else
-            {
-                selectedApps.Remove(item.AppInfo.Id);
-            }
-
-            lbl_SelectedGameCount.Text = $"{selectedApps.Count} seleccionados.";
-        }
-
         private void AddAndClose_Click(object sender, EventArgs e)
         {
-            callback?.Invoke(selectedApps);
             Close();
+        }
+
+        private void SearchGameDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            callback?.Invoke(selectedApps);
+        }
+
+        private void AddSelectedGame_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in ResultContainer.Controls)
+            {
+                if (control is SearchResultItem item)
+                {
+                    if (item.Selected && !selectedApps.ContainsKey(item.AppInfo.Id))
+                    {
+                        selectedApps.Add(item.AppInfo.Id, item.AppInfo);
+                        SelectedAppsContainer.Controls.Add(control);
+                        item.Selected = false;
+                    }
+                }
+            }
+
+            gb_SelectedGamesBox.Text = $"{selectedApps.Count} juegos seleccionados";
+        }
+
+        private void RemoveSelectedGame_Clock(object sender, EventArgs e)
+        {
+            foreach (Control control in SelectedAppsContainer.Controls)
+            {
+                if (control is SearchResultItem item)
+                {
+                    if (item.Selected)
+                    {
+                        selectedApps.Remove(item.AppInfo.Id);
+                        ResultContainer.Controls.Add(control);
+                        item.Selected = false;
+                    }
+                }
+            }
+
+            gb_SelectedGamesBox.Text = $"{selectedApps.Count} juegos seleccionados";
         }
     }
 }
