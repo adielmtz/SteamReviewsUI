@@ -178,6 +178,7 @@ namespace SteamGameReviews
             chk_OpenFolder.TabIndex = 4;
             chk_OpenFolder.Text = "Abrir carpeta al finalizar la descarga";
             chk_OpenFolder.UseVisualStyleBackColor = true;
+            chk_OpenFolder.CheckedChanged += chk_OpenFolder_CheckedChanged;
             // 
             // lbl_ProgressReport
             // 
@@ -206,6 +207,7 @@ namespace SteamGameReviews
             Name = "MainWindow";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Steam Game Reviews";
+            WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize) dgv_AppListView).EndInit();
             ResumeLayout(false);
             PerformLayout();

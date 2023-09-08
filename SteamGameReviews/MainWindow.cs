@@ -1,3 +1,4 @@
+using SteamGameReviews.Extensions;
 using SteamGameReviews.Steam;
 using SteamGameReviews.Steam.Entities;
 using System;
@@ -12,13 +13,35 @@ namespace SteamGameReviews
 {
     public partial class MainWindow : Form
     {
+        private const string APP_OUTPUT_FOLDER = "Steam Reviews";
+
+        private UserSettings settings;
         private Dictionary<long, AppInfo> SelectedApps = new Dictionary<long, AppInfo>();
 
         public MainWindow()
         {
             InitializeComponent();
-            tb_outputDirectory.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            settings = UserSettings.Default;
             lbl_ProgressReport.Text = "";
+            chk_OpenFolder.Checked = settings.OpenFolderWhenDone;
+
+            if (string.IsNullOrWhiteSpace(settings.OutputPath) || !Directory.Exists(settings.OutputPath))
+            {
+                settings.OutputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), APP_OUTPUT_FOLDER);
+                settings.Save();
+            }
+
+            SetOutputFolder(settings.OutputPath);
+        }
+
+        private void SetOutputFolder(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            tb_outputDirectory.Text = path;
         }
 
         private void SelectOputDirectory_Click(object sender, EventArgs e)
@@ -30,7 +53,8 @@ namespace SteamGameReviews
 
             if (result == DialogResult.OK)
             {
-                tb_outputDirectory.Text = dialog.SelectedPath;
+                SetOutputFolder(Path.Combine(dialog.SelectedPath, APP_OUTPUT_FOLDER));
+                settings.Save();
             }
         }
 
@@ -204,7 +228,7 @@ namespace SteamGameReviews
 
         private async Task<string> WriteReviewsToCsvAsync()
         {
-            string filename = Path.Combine(tb_outputDirectory.Text, "SteamReviews.csv");
+            string filename = Path.Combine(tb_outputDirectory.Text, $"Reviews {DateTime.Now.ToFileNameString()}.csv");
             await using var writter = new SteamReviewCsvWritter(filename);
             await writter.WriteHeaders();
 
@@ -254,6 +278,12 @@ namespace SteamGameReviews
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        private void chk_OpenFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.OpenFolderWhenDone = chk_OpenFolder.Checked;
+            settings.Save();
         }
     }
 }

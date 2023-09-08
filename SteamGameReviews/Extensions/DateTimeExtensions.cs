@@ -8,5 +8,10 @@ namespace SteamGameReviews.Extensions
         {
             return dt.ToString("yyyy-MM-dd HH:mm:ss");
         }
+
+        public static string ToFileNameString(this DateTime dt)
+        {
+            return dt.ToString("yyyy-MM-dd_HH.mm.ss");
+        }
     }
 }
